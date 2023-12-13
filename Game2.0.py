@@ -30,7 +30,7 @@ for piece in ['bR', 'bN', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wN', 'wB', 'wQ', 'wK', 
         print(f"Image file not found: {image_path}")
 # Initialize the chess board and engine
 chess_board = ch.Board()
-engine = ce.Engine(chess_board, maxDepth=5, color=ch.WHITE)
+engine = ce.Engine(chess_board, maxDepth=5, color=ch.BLACK)
 
 def draw_board(screen, board):
     # Draw squares on the board and pieces
