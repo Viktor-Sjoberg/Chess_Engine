@@ -73,6 +73,12 @@ class Engine:
             -30, -40, -40, -50, -50, -40, -40, -30,
             -30, -40, -40, -50, -50, -40, -40, -30,
         ]
+        self.PAWN_B_PST = self.PAWN_W_PST[::-1]
+        self.KNIGHT_B_PST = self.KNIGHT_W_PST[::-1]
+        self.BISHOP_B_PST = self.BISHOP_W_PST[::-1]
+        self.ROOK_B_PST = self.ROOK_W_PST[::-1]
+        self.QUEEN_B_PST = self.QUEEN_W_PST[::-1]
+        self.KING_B_PST = self.KING_W_PST[::-1]
 
 
 
@@ -111,30 +117,43 @@ class Engine:
         piece = self.board.piece_at(square)
         if piece is None:
             return 0
-        if piece.color == ch.BLACK:
-            square = 63 - square
 
         piece_type = piece.piece_type
         piece_value = self.PIECE_VALUES[piece_type - 1]  # Adjust the index according to your PIECE_VALUES list
         square_value = 0
 
-        if(piece_type==ch.PAWN):
-            square_value = self.PAWN_W_PST[square]
-        elif(piece_type==ch.ROOK):
-            square_value = self.ROOK_W_PST[square]
-        elif(piece_type==ch.BISHOP):
-            square_value = self.BISHOP_W_PST[square]
-        elif(piece_type==ch.KNIGHT):
-            square_value = self.KNIGHT_W_PST[square]
-        elif(piece_type==ch.QUEEN):
-            square_value = self.QUEEN_W_PST[square]
-        elif(piece_type==ch.KING):
-            square_value = self.KING_W_PST[square]
+        if piece.color == ch.WHITE:
+            if piece_type == ch.PAWN:
+                square_value = self.PAWN_W_PST[square]
+            elif piece_type == ch.KNIGHT:
+                square_value = self.KNIGHT_W_PST[square]
+            elif piece_type == ch.BISHOP:
+                square_value = self.BISHOP_W_PST[square]
+            elif piece_type == ch.ROOK:
+                square_value = self.ROOK_W_PST[square]
+            elif piece_type == ch.QUEEN:
+                square_value = self.QUEEN_W_PST[square]
+            elif piece_type == ch.KING:
+                square_value = self.KING_W_PST[square]
+        else:  # piece.color == ch.BLACK
+            if piece_type == ch.PAWN:
+                square_value = self.PAWN_B_PST[square]
+            elif piece_type == ch.KNIGHT:
+                square_value = self.KNIGHT_B_PST[square]
+            elif piece_type == ch.BISHOP:
+                square_value = self.BISHOP_B_PST[square]
+            elif piece_type == ch.ROOK:
+                square_value = self.ROOK_B_PST[square]
+            elif piece_type == ch.QUEEN:
+                square_value = self.QUEEN_B_PST[square]
+            elif piece_type == ch.KING:
+                square_value = self.KING_B_PST[square]
+
         if piece.color != self.color:
             return -(piece_value + square_value)
         else:
             return piece_value + square_value
-        
+    
     def engine(self, candidate, depth):
         if ( depth == self.maxDepth or self.board.legal_moves.count()==0):
                 return self.evalfunct()
